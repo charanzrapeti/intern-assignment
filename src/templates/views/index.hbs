@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Product List </title>
+	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+</head>
+<body>
+   <div class="CartContainer" id="paginated-list">
+   	   <div class="Header">
+   	   	<h3 class="Heading">Product List</h3>
+   	   	<h5 class="Action">Remove all</h5>
+		</div>
+		
+			{{#each products}}
+			
+				<div class="Cart-Items">
+					<div class="image-box">
+						<img src="/images/nat-6.jpg"  />
+					</div>
+					<div class="about">
+						<h1 class="title">{{name}}</h1>
+						<h3 class="subtitle">{{description}}</h3>
+						<h3 class="subtitle category">{{category}}</h3>
+					</div>
+					<div class="prices">
+						<div class="amount">${{price}}</div>
+						<a href="/product/{{_id}}" class="save">Update Item</a>
+						<a href="/product/delete/{{_id}}" class="remove">Remove</a>
+					</div>
+				</div>
+		
+		{{/each}}
+   	 <hr> 
+   	 <div class="checkout">
+   	 <a href="/postPage"class="button">Add Item</a>
+    </div>
+
+	<nav class="pagination-container">
+          <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
+            &lt;
+          </button>
+      
+          <div id="pagination-numbers">
+      
+          </div>
+      
+          <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
+            &gt;
+          </button>
+        </nav>
+   </div>
+
+
+   <script>
+	// code to implement pagination.
+		const paginationNumbers = document.getElementById("pagination-numbers");
+		const paginatedList = document.getElementById("paginated-list");
+		const listItems = paginatedList.querySelectorAll(".Cart-Items");
+		console.log(listItems)
+		const nextButton = document.getElementById("next-button");
+		const prevButton = document.getElementById("prev-button");
+		const paginationLimit = 4;
+		const pageCount = Math.ceil(listItems.length / paginationLimit);
+		console.log(pageCount)
+		let currentPage = 1;
+
+		const disableButton = (button) => {
+		button.classList.add("disabled");
+		button.setAttribute("disabled", true);
+		};
+
+		const enableButton = (button) => {
+		button.classList.remove("disabled");
+		button.removeAttribute("disabled");
+		};
+
+		const handlePageButtonsStatus = () => {
+		if (currentPage === 1) {
+			disableButton(prevButton);
+		} else {
+			enableButton(prevButton);
+		}
+
+		if (pageCount === currentPage) {
+			disableButton(nextButton);
+		} else {
+			enableButton(nextButton);
+		}
+		};
+
+		const handleActivePageNumber = () => {
+		document.querySelectorAll(".pagination-number").forEach((button) => {
+			button.classList.remove("active");
+			const pageIndex = Number(button.getAttribute("page-index"));
+			if (pageIndex == currentPage) {
+			button.classList.add("active");
+			}
+		});
+		};
+
+		const appendPageNumber = (index) => {
+		const pageNumber = document.createElement("button");
+		pageNumber.className = "pagination-number";
+		pageNumber.innerHTML = index;
+		pageNumber.setAttribute("page-index", index);
+		pageNumber.setAttribute("aria-label", "Page " + index);
+
+		paginationNumbers.appendChild(pageNumber);
+		};
+
+		const getPaginationNumbers = () => {
+		for (let i = 1; i <= pageCount; i++) {
+			appendPageNumber(i);
+		}
+		};
+
+		const setCurrentPage = (pageNum) => {
+		currentPage = pageNum;
+
+		handleActivePageNumber();
+		handlePageButtonsStatus();
+		
+		const prevRange = (pageNum - 1) * paginationLimit;
+		const currRange = pageNum * paginationLimit;
+
+		listItems.forEach((item, index) => {
+			item.classList.add("hidden");
+			if (index >= prevRange && index < currRange) {
+			item.classList.remove("hidden");
+			}
+		});
+		};
+
+		window.addEventListener("load", () => {
+		getPaginationNumbers();
+		setCurrentPage(1);
+
+		prevButton.addEventListener("click", () => {
+			setCurrentPage(currentPage - 1);
+		});
+
+		nextButton.addEventListener("click", () => {
+			setCurrentPage(currentPage + 1);
+		});
+
+		document.querySelectorAll(".pagination-number").forEach((button) => {
+			const pageIndex = Number(button.getAttribute("page-index"));
+
+			if (pageIndex) {
+			button.addEventListener("click", () => {
+				setCurrentPage(pageIndex);
+			});
+			}
+		});
+		});
+
+   </script>
+</body>
+</html>

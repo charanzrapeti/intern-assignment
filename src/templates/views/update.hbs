@@ -1,0 +1,78 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/post.css">
+    <title>Create New Product</title>
+</head>
+<body>
+    <div class="input">
+        <form id="form" class="validate" enctype="text/html">
+            <div class="form-field">
+              <label for="product-name">Product Name</label>
+              
+              <input type="text" name="name" id="product-name" value="{{product.name}}" />
+            </div>
+            <div class="form-field">
+              <label for="category-input">Category</label>
+              <input type="text" name="category" id="category-input" value="{{product.category}}" />
+            </div>
+            <div class="form-field">
+                <label for="price-input">Price</label>
+                <input type="number" name="price" id="price-input" value="{{product.price}}" />
+            </div>
+            <!-- <div class="form-field">
+                <label for="image-source">Image URL</label>
+                <input type="text" name="image-source" id="image-source">
+            </div> -->
+
+            <div class="form-field">
+              <label for="description-input">Description</label>
+              <input type="text" name="description" id="description-input" value="{{product.description}}"  />
+            </div>
+           
+
+            
+            <div class="form-field">
+              <label for=""></label>
+              <input type="submit" value="Save" />
+            </div>
+          </form>
+    </div>
+
+   
+</body>
+
+<script>
+    var id = "{{product._id}}"
+
+    var form = document.querySelector("#form");
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify(object);
+
+        var requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: raw,
+        
+        };
+        const url = "/product/"+id;
+        console.log(url);
+        fetch(url, requestOptions).then(() => {
+            window.location.href = "/"
+        })
+        
+    }
+    
+</script>
+</html>

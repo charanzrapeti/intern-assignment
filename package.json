@@ -1,0 +1,19 @@
+{
+  "name": "ideausher-intern",
+  "version": "1.0.0",
+  "description": "intern assignmet for idea-user",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js",
+    "dev": "env-cmd .env node src/index.js."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.7.0"
+  }
+}

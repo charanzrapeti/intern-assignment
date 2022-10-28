@@ -1,0 +1,49 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/post.css">
+    <title>Create New Product</title>
+</head>
+<body>
+    <div class="input">
+        <form method="post" action="/product" id="form" class="validate" enctype="text/html">
+            <div class="form-field">
+              <label for="product-name">Product Name</label>
+              
+              <input type="text" name="name" id="product-name" placeholder="Mobile Screen" required />
+            </div>
+            <div class="form-field">
+              <label for="category-input">Category</label>
+              <input type="text" name="category" id="category-input" placeholder="Tech" required />
+            </div>
+            <div class="form-field">
+                <label for="price-input">Price</label>
+                <input type="number" name="price" id="price-input" required />
+            </div>
+            <div class="form-field">
+                <label for="image-source">Image URL</label>
+                <input type="text" name="imageurl" id="image-source" required>
+            </div>
+
+            <div class="form-field">
+              <label for="description-input">Description</label>
+              <input type="text" name="description" id="description-input" minlength="10" maxlength="100" />
+            </div>
+           
+
+            
+            <div class="form-field">
+              <label for=""></label>
+              <input type="submit" value="Create" />
+            </div>
+          </form>
+    </div>
+
+   
+</body>
+</html>
